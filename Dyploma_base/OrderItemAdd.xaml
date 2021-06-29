@@ -1,0 +1,111 @@
+﻿<Window x:Class="Dyploma_base.OrderItemAdd"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Dyploma_base"
+        mc:Ignorable="d"
+        Title="Редактор деталей" Height="450" Width="740">
+    <Grid Background="NavajoWhite">
+        <TabControl Margin="2" Background="LightGoldenrodYellow">
+            <TabItem Header="Добавление изделий">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="13" Margin="5">
+                            Номер заявки:
+                            </TextBlock>
+                            <TextBlock Margin="0,5,0,0" FontSize="13" Text="{Binding orderid}"></TextBlock>
+                        </StackPanel>
+                        
+                        <GroupBox Header="Изменение количества" VerticalAlignment="Center" Height="150" Width="170" Margin="5">
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBox Margin="5" Text="{Binding quantity, Mode=TwoWay}">
+
+                                </TextBox>
+                                <Button Margin="5" Command="{Binding click_update_quan}">
+                                    Изменить
+                                </Button>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                    
+                    <Grid HorizontalAlignment="Right">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="0.25*"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <DataGrid Background="OldLace" SelectedItem="{Binding Select_request_oitems}" AutoGenerateColumns="False" ItemsSource="{Binding Path=orderItems}" Width="500" HorizontalAlignment="Center" Grid.Row="0">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding id}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Наименование" Binding="{Binding itemname}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Статус" Binding="{Binding statusitem}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Количество" Binding="{Binding quantity}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Цена" Binding="{Binding price}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="OrderID" Binding="{Binding orderid}"></DataGridTextColumn>
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+
+                        <StackPanel HorizontalAlignment="Center" Grid.Row="1" Orientation="Horizontal">
+                            <Button Margin="0,0,10,0" HorizontalAlignment="Left" Command="{Binding click_add_oi}">Добавить</Button>
+                            <Button HorizontalAlignment="Right" Command="{Binding click_del_oi}">Удалить</Button>
+                        </StackPanel>
+
+                        <DataGrid Background="OldLace" ItemsSource="{Binding Items}" SelectedItem="{Binding Select_items, Mode=TwoWay}" AutoGenerateColumns="False" Width="500" HorizontalAlignment="Center" Grid.Row="2">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding id}" Width="50"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Наименование" Binding="{Binding name}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Тип изделия" Binding="{Binding type}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Материал" Binding="{Binding material}" Width="95"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Цена" Binding="{Binding price}" Width="70"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Размерность" Binding="{Binding sizing}"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </Grid>
+                </StackPanel>
+                
+            </TabItem>
+            <TabItem Header="Дополнительные услуги">
+                <StackPanel Margin="3" HorizontalAlignment="Center" Orientation="Horizontal" >
+                    
+                    
+                    <Grid HorizontalAlignment="Right">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="0.25*"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <DataGrid Background="LightGoldenrodYellow" AutoGenerateColumns="False" SelectedItem="{Binding Select_request_additionals}" ItemsSource="{Binding Path=additionals}" Width="500" HorizontalAlignment="Center" Grid.Row="0">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding id}"/>
+                                <DataGridTextColumn Header="Наименование" Binding="{Binding description}" Width="150"/>
+                                <DataGridTextColumn Header="Цена" Binding="{Binding price}" Width="70"/>
+                            </DataGrid.Columns>
+                            
+                        </DataGrid>
+
+                        <StackPanel HorizontalAlignment="Center" Grid.Row="1" Orientation="Horizontal">
+                            <Button Margin="0,0,10,0" HorizontalAlignment="Left" Command="{Binding click_add_ad}">Добавить</Button>
+                            <Button HorizontalAlignment="Right" Command="{Binding click_del_ad}">Удалить</Button>
+                        </StackPanel>
+
+                        <DataGrid Background="LightGoldenrodYellow" SelectedItem="{Binding Select_additions}" AutoGenerateColumns="False" ItemsSource="{Binding Path=additions}" Width="500" HorizontalAlignment="Center" Grid.Row="2">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding id}"/>
+                                <DataGridTextColumn Header="Наименование" Binding="{Binding description}" Width="150"/>
+                                <DataGridTextColumn Header="Цена" Binding="{Binding price}" Width="70"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </Grid>
+
+                </StackPanel>
+               
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

@@ -1,0 +1,125 @@
+﻿<Window x:Class="Dyploma_base.FormStuff"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Dyploma_base"
+        mc:Ignorable="d"
+        Title="Редактор сервисной информации" Height="555" Width="681"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Light"
+        TextElement.FontSize="13"
+        FontFamily="{materialDesign:MaterialDesignFont}"
+        >
+    <Grid Margin="0,2,0,0" Background="NavajoWhite">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2.5*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Grid.Column="0">
+            
+            <GroupBox Header="Типы изделия"  >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.6*"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid Background="OldLace" Width="242" AutoGenerateColumns="False" 
+                              HorizontalAlignment="Left" SelectedItem="{Binding Select_Type,Mode=TwoWay}"
+                              Grid.Column="0" ItemsSource="{Binding types}" Height="120">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding id}"/>
+                            <DataGridTextColumn Header="Наименование" Binding="{Binding description}" Width="150"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <GroupBox Background="LightGoldenrodYellow" Grid.Column="1" Margin="2">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBox Margin="2" Text="{Binding tb_addtype, Mode=TwoWay}"
+                                     materialDesign:HintAssist.Hint="Наименование"
+                                     ></TextBox>
+                            <Button Margin="0,2,0,0" Content="Добавить" Command="{Binding Click_add_type}"></Button>
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="Материалы" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition  Width="1.6*"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid Background="OldLace" Width="270" AutoGenerateColumns="False"  SelectedItem="{Binding Select_Mat,Mode=TwoWay}"
+                              HorizontalAlignment="Left" Grid.Column="0" Height="120" 
+                              ItemsSource="{Binding materials,Mode=TwoWay}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding id}"/>
+                            <DataGridTextColumn Header="Наименование" Binding="{Binding description}" Width="150"/>
+                            <DataGridTextColumn Header="Цена" Binding="{Binding price}" Width="70"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <GroupBox Background="LightGoldenrodYellow" Grid.Column="1" Margin="2">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBox Margin="2" Text="{Binding tb_addmat_descr, Mode=TwoWay}"
+                                     materialDesign:HintAssist.Hint="Наименование"></TextBox>
+                            <TextBox Margin="2" Text="{Binding tb_addmat_price, Mode=TwoWay}"
+                                     materialDesign:HintAssist.Hint="Цена"></TextBox>
+                            <Button Margin="0,2,0,0" Content="Добавить" Command="{Binding Click_add_mat}"></Button>
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="Услуги">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.6*"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid Background="OldLace" AutoGenerateColumns="False" Grid.Column="0"  SelectedItem="{Binding Select_Ad,Mode=TwoWay}"
+                              ItemsSource="{Binding additions,Mode=TwoWay}" Height="120" 
+                              HorizontalAlignment="Left" Width="270">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding id}"/>
+                            <DataGridTextColumn Header="Наименование" Binding="{Binding description}" Width="150"/>
+                            <DataGridTextColumn Header="Цена" Binding="{Binding price}" Width="70"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <GroupBox Background="LightGoldenrodYellow" Grid.Column="1" Margin="2">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBox Margin="2" Text="{Binding tb_addad_descr, Mode=TwoWay}"
+                                     materialDesign:HintAssist.Hint="Наименование"></TextBox>
+                            <TextBox Margin="2" Text="{Binding tb_addad_price, Mode=TwoWay}"
+                                     materialDesign:HintAssist.Hint="Цена"></TextBox>
+                            <Button Margin="0,2,0,0" Content="Добавить" Command="{Binding Click_add_ad}"></Button>
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+
+            </GroupBox>
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Left"  Grid.Column="1">
+            <GroupBox Background="LightGoldenrodYellow" Margin="12" Header="Изменение" Width="150" Height="150" HorizontalAlignment="Right">
+                <StackPanel >
+                    <TextBox Margin="5,2,5,2" Text="{Binding tb_change_descr, Mode=TwoWay}"
+                             materialDesign:HintAssist.Hint="Наименование"></TextBox>
+                    <TextBox IsEnabled="{Binding priceIsEnabled,Mode=TwoWay}" Margin="5,2,5,7"
+                             Text="{Binding tb_change_price, Mode=TwoWay}" materialDesign:HintAssist.Hint="Цена"></TextBox>
+                    <Button Command="{Binding Click_change_stuff}">Изменить</Button>
+                </StackPanel>
+            </GroupBox>
+            <Button Margin="5">Удалить выбранное</Button>
+            <Button Command="{Binding click_items_stuff}" Margin="5">Сервис изделий</Button>
+        </StackPanel>
+
+
+        
+
+    </Grid>
+</Window>

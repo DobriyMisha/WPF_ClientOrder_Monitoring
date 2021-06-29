@@ -1,0 +1,165 @@
+﻿<Window x:Class="Dyploma_base.OrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Dyploma_base"
+        mc:Ignorable="d"
+        Title="{Binding OrderTitle}" Height="400" Width="750"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="13"
+        FontFamily="{materialDesign:MaterialDesignFont}"
+        >
+    <Grid Background="NavajoWhite">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Left Main Stack-->
+        <StackPanel Grid.Column="0">
+
+            <!-- Left Side TextBoxes Grid-->
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Width="300" Margin="0 5 0 0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2.2*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Text Blocks Names-->
+                <StackPanel Grid.Column="0" Margin="2">
+                    <TextBlock FontSize="13" HorizontalAlignment="Right" Text="Полное имя:" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0 13 0 0"/>
+                    <TextBlock FontSize="13" HorizontalAlignment="Right" Text="Статус заявки" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0 15 0 0"/>
+                    <TextBlock FontSize="13" HorizontalAlignment="Right" Text="Создан" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0 14 0 0"/>
+                    <TextBlock FontSize="13" HorizontalAlignment="Right" Text="Ограничение" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0 15 0 0"/>
+                    <TextBlock FontSize="13" HorizontalAlignment="Right" Text="Закрыт" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0 15 0 0"/>
+                </StackPanel>
+
+                <!--Text Boxes--> 
+                <StackPanel Grid.Column="1" Margin="10">
+
+                    <TextBox HorizontalAlignment="Stretch"  Text="{Binding fio}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="3,3,3,3" Width="auto" />
+                    <!--Status-->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" HorizontalAlignment="Stretch"  Text="{Binding status}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="3"  />
+                        <ComboBox Background="LightGoldenrodYellow" Grid.Column="1"  Margin="3" HorizontalAlignment="Stretch" SelectedItem="{Binding Select_status1, Mode=TwoWay}">
+                            <ComboBoxItem Content="1. Новый"></ComboBoxItem>
+                            <ComboBoxItem Content="2. Обработан"></ComboBoxItem>
+                            <ComboBoxItem Content="3. Готов"></ComboBoxItem>
+                            <ComboBoxItem Content="4. Проблема"></ComboBoxItem>
+                            <ComboBoxItem Content="5. Закрыт"></ComboBoxItem>
+                        </ComboBox>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" HorizontalAlignment="Stretch"  Text="{Binding opendate}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="3" />
+                        <Button Height="22" Grid.Column="1" Margin="3" Content="Сегодня" Command="{Binding click_todayopen}"/>
+                    </Grid>
+                    <TextBox HorizontalAlignment="Stretch"  Text="{Binding deadline}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="3" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox HorizontalAlignment="Stretch"  Text="{Binding closedate}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="3" Grid.Column="0"/>
+                        <Button Height="22" FontSize="13" Grid.Column="1" Margin="3" Content="Закрыть" Command="{Binding click_todayclose}" />
+                    </Grid>
+
+                </StackPanel>
+
+            </Grid>
+
+            <Grid Margin="2">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <Button Margin="3" FontSize="12" Command="{Binding clickUpdateOrder}">Сохранить измненения</Button>
+                <Button Margin="3" Grid.Column="1" Command="{Binding clickRefresh}">Обновить всё</Button>
+
+            </Grid>
+
+            <GroupBox Background="LightGoldenrodYellow" FontSize="13" Margin="5">
+                <GroupBox.Header >
+                    <Border Background="Moccasin">
+                        <Label Content="Создание новой заявки"></Label>
+                    </Border>
+                </GroupBox.Header>
+                <Grid Margin="2">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Margin="3" Command="{Binding clickCreatePlane}">Создать пустой</Button>
+                    <Button Margin="3" Grid.Column="1" Command="{Binding clickInsertNew}">Добавить новый</Button>
+
+                </Grid>
+            </GroupBox>
+                
+
+        </StackPanel>
+
+        <!--Right Main Stack-->
+        <StackPanel Grid.Column="1" >
+
+            <!--Order Items-->
+            <DataGrid Background="OldLace" HorizontalAlignment="Center" AutoGenerateColumns="False"
+                      ItemsSource="{Binding Path=orderItems}" IsReadOnly="True"
+                      SelectedItem="{Binding Select_request_oitems, Mode=TwoWay}"
+                      Name="datagridOI" LoadingRow="datagridOI_LoadingRow"
+                      Width="350" Height="150" Margin="10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding id}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Наименование" Binding="{Binding itemname}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Статус" Binding="{Binding statusitem}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Количество" Binding="{Binding quantity}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Цена" Binding="{Binding price}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="OrderID" Binding="{Binding orderid}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Background="LightGoldenrodYellow" HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button Command="{Binding edit_details}" Margin="0,0,5,0" Height="30">
+                    Редактор компонентов
+                </Button>
+
+                <ComboBox SelectedItem="{Binding Select_status2, Mode=TwoWay}" Width="110">
+                    <ComboBoxItem Content="1. В очереди"></ComboBoxItem>
+                    <ComboBoxItem Content="2. В работе"></ComboBoxItem>
+                    <ComboBoxItem Content="3. Готов"></ComboBoxItem>
+                    <ComboBoxItem Content="4. Проблема"></ComboBoxItem>
+                </ComboBox>
+                <Button Command="{Binding Click_update_status2}" FontSize="20" Margin="5,0,0,0" Width="42">+</Button>
+            </StackPanel>
+
+                <!--Additionals-->
+            <DataGrid Background="OldLace" HorizontalAlignment="Center" VerticalAlignment="Top" AutoGenerateColumns="False"
+                      ItemsSource="{Binding Path=additionals}"
+                      Width="330" Height="130" Margin="10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding id}"/>
+                    <DataGridTextColumn Header="Наименование" Binding="{Binding description}" Width="150"/>
+                    <DataGridTextColumn Header="Цена" Binding="{Binding price}" Width="70"/>
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+        </StackPanel>
+
+
+    </Grid>
+</Window>

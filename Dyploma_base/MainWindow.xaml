@@ -1,0 +1,197 @@
+﻿<Window x:Class="Dyploma_base.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Dyploma_base"
+        mc:Ignorable="d"
+        Title="Главная страница" Height="800" Width="940"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="{materialDesign:MaterialDesignFont}"
+        >
+
+
+
+    <StackPanel Background="NavajoWhite">
+        
+        <Grid>
+            <StackPanel Height="999">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0">
+
+                        <!--Main DataGrid with Orders-->
+                        <DataGrid Background="OldLace" AutoGenerateColumns="False" Height="400" HorizontalAlignment="Left"
+                              ItemsSource="{Binding Path=orders}" 
+                              SelectedItem="{Binding Select_Request, Mode=TwoWay}"
+                              FontSize="18" 
+                              Margin="15,35,0,0" Name="dataGrid1" IsReadOnly="True"
+                              VerticalAlignment="Top" Width="900" 
+                              LoadingRow="dataGrid1_LoadingRow"
+                              >
+                            
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding id}"/>
+                                <DataGridTextColumn Header="Полное имя" Binding="{Binding FIO}" Width="250"/>
+                                <DataGridTextColumn Header="Статус заявки" Binding="{Binding status}"/>
+                                <DataGridTextColumn Header="Дата создания" Binding="{Binding created}"/>
+                                <DataGridTextColumn Header="Сроки" Binding="{Binding deadline}" Width="130"/>
+                                <DataGridTextColumn Header="Дата закрытия" Binding="{Binding closed}"/>
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+                    </StackPanel>
+                    
+                    
+                    <StackPanel Margin="5" Grid.Row="1" Orientation="Horizontal">
+                        
+                        <!--TabControl with additional controls-->
+                        <TabControl Background="LightGoldenrodYellow" Grid.Column="0" Margin="10" HorizontalAlignment="Left" Height="250" Width="370" VerticalAlignment="Top">
+                            <!--Search/filter tab-->
+                            <TabItem>
+                                <TabItem.Header>
+                                    <TextBlock>Поиск</TextBlock>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <StackPanel>
+                                        <StackPanel  Margin="10">
+                                            
+                                            <!--Search By OrderNumb-->
+                                            <GroupBox HorizontalAlignment="Left" Width="160" Margin="5" Padding="5" Header="По номеру заказа">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Width="90" Text="{Binding tbSearchBy_OrderNumber}"></TextBox>
+                                                    <Button Margin="5 0 0 0" 
+                                                            Command="{Binding Click_SearchBy_OrderNumber}">
+                                                        <Image Source="Images/search-icon-png.png" Width="20" Height="20"/>
+                                                    </Button>
+                                                </StackPanel>
+                                            </GroupBox>
+                                            
+                                            <!--Search By FIO-->
+                                            <GroupBox Header="По имени" Margin="5" Padding="5">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Width="250" Text="{Binding tbSearchBy_Name}"></TextBox>
+                                                    <Button Margin="5 0 0 0" Command="{Binding Click_clickSearchBy_Name}">
+                                                        <Image Source="Images/search-icon-png.png" Width="20" Height="20"/>
+                                                    </Button>
+                                                </StackPanel>
+                                            </GroupBox>
+                                            
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" Margin="10">
+                                            
+                                        </StackPanel>
+                                        
+                                    </StackPanel>
+                                </TabItem.Content>
+                            </TabItem>
+
+                            <!--Utility tab-->
+                            <TabItem>
+                                <TabItem.Header>
+                                    <TextBlock>Управление</TextBlock>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <StackPanel>
+                                        <!--Status change-->
+                                        <StackPanel Orientation="Horizontal">
+                                            <GroupBox Header="Статус заказа" Margin="5 0 0 0 " Padding="5">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <ComboBox Margin="3" Width="100" SelectedItem="{Binding Select_status1, Mode=TwoWay}" >
+                                                        <ComboBoxItem Content="1. Новый"></ComboBoxItem>
+                                                        <ComboBoxItem Content="2. Обработан"></ComboBoxItem>
+                                                        <ComboBoxItem Content="3. Готов"></ComboBoxItem>
+                                                        <ComboBoxItem Content="4. Проблема"></ComboBoxItem>
+                                                        <ComboBoxItem Content="5. Закрыт"></ComboBoxItem>
+                                                    </ComboBox>
+                                                    <Button Command="{Binding Click_update_status1}">
+                                                        GO
+                                                    </Button>
+                                                </StackPanel>
+                                            </GroupBox>
+                                            <GroupBox Header="Статус изделия" Margin="5 0 0 0 " Padding="5">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <ComboBox Margin="3" Width="100" SelectedItem="{Binding Select_status2, Mode=TwoWay}">
+                                                        <ComboBoxItem Content="1. В очереди"></ComboBoxItem>
+                                                        <ComboBoxItem Content="2. В работе"></ComboBoxItem>
+                                                        <ComboBoxItem Content="3. Готов"></ComboBoxItem>
+                                                        <ComboBoxItem Content="4. Проблема"></ComboBoxItem>
+                                                    </ComboBox>
+                                                    <Button Command="{Binding Click_update_status2}">
+                                                        GO
+                                                    </Button>
+                                                </StackPanel>
+                                            </GroupBox>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            
+                                            <Button Width="160" Margin="5" Padding="2" Command="{Binding Click_open_redactor_select}">
+                                                Редактор заявки
+                                            </Button>
+                                            
+                                            <Button Width="160" Margin="15,5,5,5" Command="{Binding ButtonClickCommandRefresh}">
+                                                Обновить
+                                            </Button>
+                                            
+                                        </StackPanel>
+                                        <Button Width="329" Margin="0,5,5,5">Создать новую заявку</Button>
+
+                                    </StackPanel>
+
+                                </TabItem.Content>
+
+                            </TabItem>
+
+                            <!--Additional stuff tab-->
+                            <TabItem>
+                                <TabItem.Header>
+                                    <TextBlock>Дополнительно</TextBlock>
+                                </TabItem.Header>
+                                <TabItem.Content>
+                                    <StackPanel>
+                                        <Button Margin="5" Command="{Binding serviceOpen}">Редактор сервисной информации
+                                        </Button>
+                                        <Button Command="{Binding click_items_stuff}" Margin="5">Редактор шаблонов изделий</Button>
+                                        
+
+                                    </StackPanel>
+
+                                </TabItem.Content>
+
+                            </TabItem>
+
+                        </TabControl>
+
+                        <!--Second DataGrid with OrderItems-->
+                        <DataGrid Background="OldLace" Grid.Column="1" AutoGenerateColumns="False" Height="300" HorizontalAlignment="Right"
+                              ItemsSource="{Binding Path=orderItems}" IsReadOnly="True"
+                                  SelectedItem="{Binding Select_request_oitems, Mode=TwoWay}"
+                                  LoadingRow="dataGrid2_LoadingRow" 
+                              Margin="0,0,25,25" Name="dataGrid2" VerticalAlignment="Top" Width="480">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Название изделия" Binding="{Binding itemname}" Width="190"/>
+                                <DataGridTextColumn Header="Статус" Binding="{Binding statusitem}" Width="130"/>
+                                <DataGridTextColumn Header="Кол-во" Binding="{Binding quantity}" Width="80"/>
+                                <DataGridTextColumn Header="Цена" Binding="{Binding price}" Width="70"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </StackPanel>
+
+                </Grid>
+               
+                    
+            </StackPanel>
+                
+        </Grid>
+    </StackPanel>
+    
+</Window>
